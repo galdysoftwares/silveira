@@ -1,10 +1,14 @@
 <?php
 
+use App\Http\Controllers\SummaryController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome
+    ');
 });
+
+Route::get('/s', [SummaryController::class, 'index']);
 
 Route::middleware([
     'auth:sanctum',
