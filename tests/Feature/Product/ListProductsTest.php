@@ -8,7 +8,7 @@ use Livewire\Livewire;
 use function Pest\Laravel\actingAs;
 
 it('should be able to access route products', function () {
-    $user = User::factory()->create();
+    $user = User::factory()->create()->withPermission();
 
     actingAs($user)
         ->get(route('products'))

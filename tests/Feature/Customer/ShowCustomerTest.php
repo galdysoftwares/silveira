@@ -8,7 +8,7 @@ use Livewire\Livewire;
 use function Pest\Laravel\{actingAs, get};
 
 beforeEach(function () {
-    $user = User::factory()->create();
+    $user = User::factory()->create()->withPermission();
     actingAs($user);
 });
 
