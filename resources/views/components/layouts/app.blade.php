@@ -16,48 +16,49 @@
         <livewire:admin.users.stop-impersonate />
     @endif
 
-    @if (!app()->environment('production'))
+    @if (app()->environment('production'))
         <x-devbar  />
     @endif
 
     <x-main full-width>
-        <x-slot:sidebar drawer="main-drawer" class="collapsible" class="bg-black">
+        <x-slot:sidebar drawer="main-drawer" collapsible class="bg-black">
 
             <!-- Hidden when collapsed -->
             <div class="ml-3 text-4xl font-black hidden-when-collapsed flex flex-col border-b border-zinc-950/5 p-4 dark:border-white/5">
-                <div class="relative font-mono">
+                <div class="relative font-extralight">
                     Silveira
                 </div>
             </div>
 
             <!-- Display when collapsed -->
-            <div class="ml-3 text-4xl font-black display-when-collapsed">
-                <div class="relative font-mono">
-                    Silveira
+            <div class="ml-3 text-4xl font-black display-when-collapsed p-4">
+                <div class="flex items-center justify-center text-center font-extralight">
+                    S
                 </div>
             </div>
 
             <x-menu activate-by-route>
 
                 {{-- Admin --}}
-                @can(\App\Enums\Can::BE_AN_ADMIN->value)
-                    <x-menu-sub title="Admin" icon="o-lock-closed">
-                        <x-menu-item title="{{__('Board')}}" icon="o-chart-bar-square" link="{{route('admin.dashboard')}}" route="admin.dashboard" />
-                        <x-menu-item title="{{__('Users')}}" icon="o-users" link="{{ route('admin.users') }}" route="admin.users"  />
-                        <x-menu-item title="{{__('Categories')}}" icon="o-folder" link="{{ route('admin.categories') }}" route="admin.categories"  />
-                        <x-menu-item title="{{__('Customers')}}" icon="o-building-storefront" link="{{route('customers')}}" route="customers" />
-                        <x-menu-item title="{{__('Opportunities')}}" icon="o-currency-dollar" link="{{route('opportunities')}}" route="opportunities" />
-                        <x-menu-item title="{{__('Products')}}" icon="o-archive-box" link="{{route('products')}}" route="products" />
-                        <x-menu-item title="{{__('Webhooks')}}" icon="o-share" link="{{route('webhooks')}}" route="webhooks" />
-                    </x-menu-sub>
-                @endcan
-
-                <x-menu-item title="{{__('Dashboard')}}" icon="o-heart" link="{{ route('dashboard') }}" route="dashboard"  />
+                <div class="mb-8">
+                    @can(\App\Enums\Can::BE_AN_ADMIN->value)
+                        <x-menu-sub title="Admin" icon="o-lock-closed">
+                            <x-menu-item title="{{__('Board')}}" icon="o-chart-bar-square" link="{{route('admin.dashboard')}}" route="admin.dashboard" />
+                            <x-menu-item title="{{__('Users')}}" icon="o-users" link="{{ route('admin.users') }}" route="admin.users"  />
+                            <x-menu-item title="{{__('Categories')}}" icon="o-folder" link="{{ route('admin.categories') }}" route="admin.categories"  />
+                            <x-menu-item title="{{__('Customers')}}" icon="o-building-storefront" link="{{route('customers')}}" route="customers" />
+                            <x-menu-item title="{{__('Opportunities')}}" icon="o-currency-dollar" link="{{route('opportunities')}}" route="opportunities" />
+                            <x-menu-item title="{{__('Products')}}" icon="o-archive-box" link="{{route('products')}}" route="products" />
+                            <x-menu-item title="{{__('Webhooks')}}" icon="o-share" link="{{route('webhooks')}}" route="webhooks" />
+                        </x-menu-sub>
+                    @endcan
+                    <x-menu-item title="{{__('Dashboard')}}" icon="o-heart" link="{{ route('dashboard') }}" route="dashboard"  />
+                </div>
 
 
                 <!-- User -->
                 @if ($user = auth()->user())
-                    <x-list-item :item="$user" sub-value="username" no-separator no-hover>
+                    <x-list-item :item="$user" sub-value="username" no-separator no-hover class="mt-8 border-t border-zinc-950/5 p-4 dark:border-white/5">
                         <x-slot:actions>
                             <div class="tooltip tooltip-left" data-tip="{{__('edit')}}">
                                 <x-button

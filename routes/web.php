@@ -5,10 +5,10 @@ declare(strict_types = 1);
 use App\Enums\Can;
 use App\Http\Controllers\Webhooks\HotmartWebhookController;
 use App\Livewire\Admin\Users\Index;
+use App\Livewire\Admin\Welcome;
 use App\Livewire\Auth\Password\{Recovery, Reset};
 use App\Livewire\Auth\{EmailValidation, Login, Register};
 use App\Livewire\{Categories, Customers, Dashboard, Opportunities, Products, Webhooks};
-use App\Livewire\Admin\Welcome;
 use Illuminate\Support\Facades\Route;
 
 #region Loginflow
