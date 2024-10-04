@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-use App\Livewire\Admin\Dashboard;
+use App\Livewire\Welcome;
 use App\Models\User;
 use Livewire\Livewire;
 
@@ -13,6 +13,6 @@ it('should block users without permission to access the admin dashboard', functi
         ->get(route('admin.dashboard'))
         ->assertForbidden();
 
-    Livewire::test(Dashboard::class)
+    Livewire::test(Welcome::class)
         ->assertForbidden();
 });
