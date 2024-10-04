@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+hr {
+    @apply h-1 border-0 m-0 bg-gray-300; /* Adjust color as needed */
+  }
