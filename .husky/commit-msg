@@ -16,9 +16,4 @@ if [ -z "$ISSUE_ID" ]; then
     exit 1
 fi
 
-# i.g. HEY-1: HEY-1: my feature
-if [[ $COMMIT_MESSAGE == $ISSUE_ID* ]]; then
-    exit 0
-fi
-
 echo "$ISSUE_ID: $COMMIT_MESSAGE" >$1
