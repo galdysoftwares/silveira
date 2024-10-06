@@ -9,7 +9,10 @@ class VideoFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'url'         => fake()->url(),
+            'youtube_id'  => fake()->uuid(),
+            'title'       => fake()->title(),
+            'description' => fake()->realText(),
         ];
     }
 }
