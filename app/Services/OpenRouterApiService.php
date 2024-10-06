@@ -10,16 +10,17 @@ class OpenRouterApiService
     {
     }
 
-    // receber conteudo e prompt
-    public function generateSummaryFromCaptionsStreaming(array $captions)
+    // receber conteudo, prompt, max de tokens da resposta
+    public function generateSummaryFromCaptionsStreaming(array $captions) //: OpenRouterResponseDto
     {
         $captionsText = implode(' ', array_column($captions, 'text'));
+        $prompt       = "Aqui estão as legendas extraídas do vídeo. Por favor, gere um resumo com base nelas: ";
         $body         = [
             "model"    => "liquid/lfm-40b:free", // Pode ser alterado conforme necessário
             "messages" => [
                 [
                     "role"    => "user",
-                    "content" => "Aqui estão as legendas extraídas do vídeo. Por favor, gere um resumo com base nelas: " . $captionsText,
+                    "content" => $prompt . $captionsText,
                 ],
             ],
             "stream" => false,
@@ -49,11 +50,19 @@ class OpenRouterApiService
 
             // Ler o stream em partes (chunks)
             while (!$stream->eof()) {
-                $chunk = $stream->read(1024); // Lê 1KB por vez, por exemplo
-                $summary .= $chunk;           // Concatena o conteúdo ao resumo
+                $chunk = $stream->read(1024);   // Lê 1KB por vez, por exemplo
+                $chunk = trim($chunk);          // Limpar resposta
+                $summary .= $chunk;             // Concatena o conteúdo ao resumo
             }
 
-            return $summary;
+            // Converte o resumo final para um array JSON (decodificação JSON)
+            $decodedSummary = json_decode($summary, true);
+
+            if (json_last_error() === JSON_ERROR_NONE) {
+                return $decodedSummary;
+            } else {
+                throw new \Exception("Erro ao decodificar JSON: " . json_last_error_msg());
+            }
 
         } catch (\Exception $e) {
             // Em caso de erro, logar e retornar null
@@ -63,4 +72,10 @@ class OpenRouterApiService
         }
 
     }
+
+    public function getMessageContent(array $openRouterResponseDto): string
+    {
+        return $openRouterResponseDto['choices'][0]['message']['content'];
+    }
+
 }

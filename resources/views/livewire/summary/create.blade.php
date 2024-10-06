@@ -20,4 +20,8 @@
             </div>
         </x-form>
     </div>
+
+    <div>
+        {{ $this->summary }}
+    </div>
 </div>

@@ -10,6 +10,8 @@ class Create extends Component
 {
     public string $url = '';
 
+    public string $summary = '';
+
     private YoutubeApiService $youtubeApiService;
 
     private OpenRouterApiService $openRouterApiService;
@@ -44,8 +46,9 @@ class Create extends Component
         $videoId       = $this->youtubeApiService->extractVideoID($this->url);
         $videoDetails  = $this->youtubeApiService->getVideoDetails($videoId);
         $videoCaptions = $this->youtubeApiService->getVideoCaptions($videoDetails);
-        dd($this->openRouterApiService->generateSummaryFromCaptionsStreaming($videoCaptions));
+        $summary       = $this->openRouterApiService->generateSummaryFromCaptionsStreaming($videoCaptions);
 
+        $this->summary = $this->openRouterApiService->getMessageContent($summary);
     }
 
     public function render(): View
