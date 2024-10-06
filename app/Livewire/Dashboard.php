@@ -20,7 +20,7 @@ class Dashboard extends Component
     {
         return [
             'url.required' => 'O campo URL é obrigatório.',
-            'url.regex' => 'A URL fornecida deve ser um link válido do YouTube.'
+            'url.regex'    => 'A URL fornecida deve ser um link válido do YouTube.',
         ];
     }
 
