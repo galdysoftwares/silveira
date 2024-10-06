@@ -16,7 +16,7 @@
         <livewire:admin.users.stop-impersonate />
     @endif
 
-    @if (app()->environment('production'))
+    @if (!app()->environment('production'))
         <x-devbar  />
     @endif
 
