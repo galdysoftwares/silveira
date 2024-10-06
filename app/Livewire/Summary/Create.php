@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Summary;
 
-use App\Services\YoutubeApiService;
+use App\Services\{OpenRouterApiService, YoutubeApiService};
 use Illuminate\View\View;
 use Livewire\Component;
 
@@ -12,9 +12,14 @@ class Create extends Component
 
     private YoutubeApiService $youtubeApiService;
 
-    public function boot(YoutubeApiService $youtubeApiService): void
-    {
-        $this->youtubeApiService = $youtubeApiService;
+    private OpenRouterApiService $openRouterApiService;
+
+    public function boot(
+        YoutubeApiService $youtubeApiService,
+        OpenRouterApiService $openRouterApiService
+    ): void {
+        $this->youtubeApiService    = $youtubeApiService;
+        $this->openRouterApiService = $openRouterApiService;
     }
 
     public function rules(): array
@@ -39,6 +44,7 @@ class Create extends Component
         $videoId       = $this->youtubeApiService->extractVideoID($this->url);
         $videoDetails  = $this->youtubeApiService->getVideoDetails($videoId);
         $videoCaptions = $this->youtubeApiService->getVideoCaptions($videoDetails);
+        dd($this->openRouterApiService->generateSummaryFromCaptionsStreaming($videoCaptions));
 
     }
 
