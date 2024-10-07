@@ -72,7 +72,8 @@
         </script>
     </div>
 
-    <div>
-        {{ $this->summary }}
-   </div>
+    {{-- melhorar apresentação do resumo --}}
+    <div class="flex flex-col items-center justify-center p-12 gap-8 max-w-lg text-center">
+        {!! $this->summary !!}
+    </div>
 </div>

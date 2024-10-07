@@ -5,6 +5,7 @@ namespace App\Livewire\Summary;
 use App\Services\{OpenRouterApiService, YoutubeApiService};
 use Illuminate\View\View;
 use Livewire\Component;
+use Parsedown;
 
 class Create extends Component
 {
@@ -49,6 +50,10 @@ class Create extends Component
         $summary       = $this->openRouterApiService->generateSummaryFromCaptionsStreaming($videoCaptions);
 
         $this->summary = $this->openRouterApiService->getMessageContent($summary);
+
+        $parsedown = new Parsedown();
+
+        $this->summary = $parsedown->text($this->summary);
     }
 
     public function render(): View
