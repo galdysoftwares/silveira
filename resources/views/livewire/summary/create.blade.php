@@ -14,14 +14,65 @@
             <div class="w-full">
                 <x-input wire:model="url" />
             </div>
-            <div class="justify-self-center">
+            <div class="justify-self-center" wire:loading.remove>
                 <x-button label="{{ __('Resumir') }}" type="submit" form="create-product-form"
                     class="lg:w-[350px] font-mono bg-black " />
             </div>
         </x-form>
     </div>
 
+    <div wire:loading>
+        <div x-data="loadingScreen()" class="flex flex-col items-center justify-center space-y-8">
+            <div class="flex space-x-4">
+                <x-loading class="loading-dots" />
+            </div>
+
+            <div class="text-center">
+                <template x-for="(phrase, index) in phrases" :key="index">
+                    <p
+                        x-show="currentPhrase === index"
+                        x-transition:enter="transition ease-out duration-500 transform"
+                        x-transition:enter-start="opacity-0 scale-90"
+                        x-transition:enter-end="opacity-100 scale-100"
+                        class="text-xl text-white"
+                    >
+                        <span x-text="phrase"></span>
+                    </p>
+                </template>
+            </div>
+
+            <!-- Subtext -->
+            <p class="text-sm text-gray-400">Estamos gerando o resumo do vídeo, isso pode levar alguns segundos...</p>
+        </div>
+
+        <script>
+            function loadingScreen() {
+                return {
+                    phrases: [
+                        "Aperte o cinto, estamos processando seu video...",
+                        "Transformando palavras em conhecimento...",
+                        "A mágica está acontecendo nos bastidores...",
+                        "Quase lá, o resumo está ganhando forma...",
+                        "Preparando algo incrível para você...",
+                    ],
+                    currentPhrase: 0,
+
+                    init() {
+                        // Troca as frases a cada 2 segundos
+                        this.startPhraseRotation();
+                    },
+
+                    startPhraseRotation() {
+                        setInterval(() => {
+                            this.currentPhrase = (this.currentPhrase + 1) % this.phrases.length;
+                        }, 2000); // Muda a frase a cada 2 segundos
+                    }
+                }
+            }
+        </script>
+    </div>
+
     <div>
         {{ $this->summary }}
-    </div>
+   </div>
 </div>
