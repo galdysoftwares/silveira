@@ -10,7 +10,9 @@ return new class () extends Migration {
         Schema::create('summaries', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('content');
+            $table->longText('content');
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('video_id')->constrained();
             $table->timestamps();
         });
     }

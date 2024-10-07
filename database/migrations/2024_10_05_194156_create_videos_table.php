@@ -12,8 +12,8 @@ return new class () extends Migration {
             $table->string('url');
             $table->string('youtube_id')->nullable()->unique()->index();
             $table->string('title');
-            $table->string('description');
-            $table->string('captions');
+            $table->text('description');
+            $table->json('captions');
             $table->timestamps();
         });
     }

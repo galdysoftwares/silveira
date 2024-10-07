@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Summary;
 
+use App\Models\{Summary, Video};
 use App\Services\{OpenRouterApiService, YoutubeApiService};
 use Illuminate\View\View;
 use Livewire\Component;
@@ -44,12 +45,30 @@ class Create extends Component
     {
         $this->validate();
 
-        $videoId       = $this->youtubeApiService->extractVideoID($this->url);
-        $videoDetails  = $this->youtubeApiService->getVideoDetails($videoId);
-        $videoCaptions = $this->youtubeApiService->getVideoCaptions($videoDetails);
-        $summary       = $this->openRouterApiService->generateSummaryFromCaptionsStreaming($videoCaptions);
+        $videoId          = $this->youtubeApiService->extractVideoID($this->url);
+        $videoDetails     = $this->youtubeApiService->getVideoDetails($videoId);
+        $captionsUrl      = $this->youtubeApiService->getVideoCaptionsUrl($videoDetails);
+        $videoCaptions    = $this->youtubeApiService->getVideoCaptions($captionsUrl);
+        $summary          = $this->openRouterApiService->generateSummaryFromCaptionsStreaming($videoCaptions);
+        $videoTitle       = $this->youtubeApiService->getVideoTitle($videoDetails);
+        $videoDescription = $this->youtubeApiService->getVideodescription($videoDetails);
+
+        $video = Video::create([
+            'url'         => $this->url,
+            'youtube_id'  => $videoId,
+            'title'       => $videoTitle,
+            'description' => $videoDescription,
+            'captions'    => json_encode($videoCaptions),
+        ]);
 
         $this->summary = $this->openRouterApiService->getMessageContent($summary);
+
+        Summary::create([
+            'title'    => $videoTitle,
+            'content'  => $this->summary,
+            'user_id'  => auth()->id(),
+            'video_id' => $video->id,
+        ]);
 
         $parsedown = new Parsedown();
 

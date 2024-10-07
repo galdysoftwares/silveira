@@ -52,7 +52,7 @@
                             <x-menu-item title="{{__('Webhooks')}}" icon="o-share" link="{{route('webhooks')}}" route="webhooks" />
                         </x-menu-sub>
                     @endcan
-                    <x-menu-item title="{{__('Dashboard')}}" icon="o-heart" link="{{ route('dashboard') }}" route="dashboard"  />
+                    <x-menu-item title="{{__('Resumir Video')}}" icon="s-document-plus" link="{{ route('dashboard') }}" route="dashboard"  />
                 </div>
 
 

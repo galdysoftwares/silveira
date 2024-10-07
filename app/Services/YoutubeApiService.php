@@ -40,10 +40,8 @@ class YoutubeApiService
         return null;
     }
 
-    public function getVideoCaptions(array $videoDetails): array
+    public function getVideoCaptions(string $url): array
     {
-        $url = $videoDetails['captions']['captionTracks'][0]['baseUrl'];
-
         try {
             $response   = $this->client->get($url);
             $xmlContent = $response->getBody()->getContents();
@@ -67,5 +65,35 @@ class YoutubeApiService
         } catch (\Exception $e) {
             throw new \RuntimeException("Error fetching or parsing captions: " . $e->getMessage());
         }
+    }
+
+    public function getVideoTitle(array $videoDetails): string
+    {
+        return $videoDetails['title'];
+    }
+
+    public function getVideoDescription(array $videoDetails): string
+    {
+        return $videoDetails['description'];
+    }
+
+    public function getVideoCategory(array $videoDetails): string
+    {
+        return $videoDetails['description'];
+    }
+
+    public function getVideoChannelTitle(array $videoDetails): string
+    {
+        return $videoDetails['channelTitle'];
+    }
+
+    public function getVideoChannelId(array $videoDetails): string
+    {
+        return $videoDetails['channelId'];
+    }
+
+    public function getVideoCaptionsUrl(array $videoDetails): string
+    {
+        return $videoDetails['captions']['captionTracks'][0]['baseUrl'];
     }
 }
