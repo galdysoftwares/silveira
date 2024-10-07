@@ -53,6 +53,7 @@
                         </x-menu-sub>
                     @endcan
                     <x-menu-item title="{{__('Resumir Video')}}" icon="s-document-plus" link="{{ route('dashboard') }}" route="dashboard"  />
+                    <x-menu-item title="{{__('Meus Resumos')}}" icon="o-document-text" link="{{ route('dashboard') }}" route="dashboard"  />
                 </div>
 
 

@@ -41,6 +41,13 @@ class Create extends Component
         ];
     }
 
+    public function mount()
+    {
+        $parsedown = new Parsedown();
+
+        $this->summary = $parsedown->text(Summary::first()->content);
+    }
+
     public function generateResume()
     {
         $this->validate();

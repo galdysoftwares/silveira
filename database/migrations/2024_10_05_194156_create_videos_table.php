@@ -10,7 +10,7 @@ return new class () extends Migration {
         Schema::create('videos', function (Blueprint $table) {
             $table->id();
             $table->string('url');
-            $table->string('youtube_id')->nullable()->unique()->index();
+            $table->string('youtube_id')->nullable()->index();
             $table->string('title');
             $table->text('description');
             $table->json('captions');
