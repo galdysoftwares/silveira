@@ -4,8 +4,15 @@ namespace App\Services;
 
 class SummaryService
 {
-    public function generate($content)
+    public function __construct(
+        protected OpenRouterApiService $openRouterApiService
+    ) {
+    }
+
+    public function generateSummary(array $captions): string
     {
-        // aqui vou gerar o resumo
+        $summaryResponse = $this->openRouterApiService->generateSummaryFromCaptionsStreaming($captions);
+
+        return $this->openRouterApiService->getMessageContent($summaryResponse);
     }
 }

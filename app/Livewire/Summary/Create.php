@@ -3,7 +3,7 @@
 namespace App\Livewire\Summary;
 
 use App\Models\{Summary, Video};
-use App\Services\{OpenRouterApiService, YoutubeApiService};
+use App\Services\{SummaryService, VideoService};
 use Illuminate\View\View;
 use Livewire\Component;
 
@@ -13,16 +13,16 @@ class Create extends Component
 
     public string $summary = '';
 
-    private YoutubeApiService $youtubeApiService;
+    protected VideoService $videoService;
 
-    private OpenRouterApiService $openRouterApiService;
+    protected SummaryService $summaryService;
 
     public function boot(
-        YoutubeApiService $youtubeApiService,
-        OpenRouterApiService $openRouterApiService
+        VideoService $videoService,
+        SummaryService $summaryService
     ): void {
-        $this->youtubeApiService    = $youtubeApiService;
-        $this->openRouterApiService = $openRouterApiService;
+        $this->videoService   = $videoService;
+        $this->summaryService = $summaryService;
     }
 
     public function rules(): array
@@ -42,33 +42,34 @@ class Create extends Component
 
     public function generateResume()
     {
-        $this->validate();
+        $this->validate(); // Validação isolada
 
-        $videoId          = $this->youtubeApiService->extractVideoID($this->url);
-        $videoDetails     = $this->youtubeApiService->getVideoDetails($videoId);
-        $captionsUrl      = $this->youtubeApiService->getVideoCaptionsUrl($videoDetails);
-        $videoCaptions    = $this->youtubeApiService->getVideoCaptions($captionsUrl);
-        $summary          = $this->openRouterApiService->generateSummaryFromCaptionsStreaming($videoCaptions);
-        $videoTitle       = $this->youtubeApiService->getVideoTitle($videoDetails);
-        $videoDescription = $this->youtubeApiService->getVideodescription($videoDetails);
+        // Obtém as informações do vídeo
+        $videoInfo = $this->videoService->getVideoInfo($this->url);
 
+        // Captions
+        $captions = $this->videoService->getVideoCaptions($videoInfo['captionsUrl']);
+
+        // Gera o resumo
+        $summaryContent = $this->summaryService->generateSummary($captions);
+
+        // Persistência no banco de dados
         $video = Video::create([
             'url'         => $this->url,
-            'youtube_id'  => $videoId,
-            'title'       => $videoTitle,
-            'description' => $videoDescription,
-            'captions'    => json_encode($videoCaptions),
+            'youtube_id'  => $videoInfo['id'],
+            'title'       => $videoInfo['title'],
+            'description' => $videoInfo['description'],
+            'captions'    => json_encode($captions),
         ]);
 
-        $this->summary = $this->openRouterApiService->getMessageContent($summary);
-
         $summary = Summary::create([
-            'title'    => $videoTitle,
-            'content'  => $this->summary,
+            'title'    => $videoInfo['title'],
+            'content'  => $summaryContent,
             'user_id'  => auth()->id(),
             'video_id' => $video->id,
         ]);
 
+        // Redireciona após a conclusão
         $this->redirectRoute('summaries.show', ['summary' => $summary]);
     }
 
