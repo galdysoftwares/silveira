@@ -6,7 +6,6 @@ use App\Models\{Summary, Video};
 use App\Services\{OpenRouterApiService, YoutubeApiService};
 use Illuminate\View\View;
 use Livewire\Component;
-use Parsedown;
 
 class Create extends Component
 {
@@ -41,13 +40,6 @@ class Create extends Component
         ];
     }
 
-    public function mount()
-    {
-        $parsedown = new Parsedown();
-
-        $this->summary = $parsedown->text(Summary::first()->content);
-    }
-
     public function generateResume()
     {
         $this->validate();
@@ -70,16 +62,14 @@ class Create extends Component
 
         $this->summary = $this->openRouterApiService->getMessageContent($summary);
 
-        Summary::create([
+        $summary = Summary::create([
             'title'    => $videoTitle,
             'content'  => $this->summary,
             'user_id'  => auth()->id(),
             'video_id' => $video->id,
         ]);
 
-        $parsedown = new Parsedown();
-
-        $this->summary = $parsedown->text($this->summary);
+        $this->redirectRoute('summaries.show', ['summary' => $summary]);
     }
 
     public function render(): View

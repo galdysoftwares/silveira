@@ -8,7 +8,7 @@ use App\Livewire\Admin\Users\Index;
 use App\Livewire\Admin\Welcome;
 use App\Livewire\Auth\Password\{Recovery, Reset};
 use App\Livewire\Auth\{EmailValidation, Login, Register};
-use App\Livewire\{Categories, Customers, Dashboard, Opportunities, Products, Webhooks};
+use App\Livewire\{Categories, Customers, Dashboard, Opportunities, Products, Summary, Webhooks};
 use Illuminate\Support\Facades\Route;
 
 #region Loginflow
@@ -22,7 +22,11 @@ Route::get('/password/reset', Reset::class)->name('password.reset');
 
 #region Authenticated
 Route::middleware(['auth', 'verified'])->group(function () {
+    #region Summary
     Route::get('/', Dashboard::class)->name('dashboard');
+    Route::get('/summaries/{summary}', Summary\Show::class)->name('summaries.show');
+    Route::get('/summaries', Summary\Show::class)->name('summaries.index');
+    #endregion
 
     #region Admin
     Route::prefix('/admin')->middleware('can:' . Can::BE_AN_ADMIN->value)->group(function () {

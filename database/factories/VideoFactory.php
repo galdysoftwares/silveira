@@ -13,6 +13,7 @@ class VideoFactory extends Factory
             'youtube_id'  => fake()->uuid(),
             'title'       => fake()->title(),
             'description' => fake()->realText(),
+            'captions'    => json_encode(fake()->realText()),
         ];
     }
 }
