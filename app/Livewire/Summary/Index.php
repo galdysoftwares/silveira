@@ -5,6 +5,7 @@ namespace App\Livewire\Summary;
 use App\Models\Summary;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class Index extends Component
@@ -25,6 +26,7 @@ class Index extends Component
             ->get();
     }
 
+    #[On('summary::reload')]
     public function render(): View
     {
         return view('livewire.summary.index');
