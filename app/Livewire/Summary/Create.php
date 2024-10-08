@@ -5,6 +5,7 @@ namespace App\Livewire\Summary;
 use App\Models\{Summary, Video};
 use App\Services\{SummaryService, VideoService};
 use Illuminate\View\View;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 
 class Create extends Component
@@ -73,6 +74,7 @@ class Create extends Component
         $this->redirectRoute('summaries.show', ['summary' => $summary]);
     }
 
+    #[Layout('app')]
     public function render(): View
     {
         return view('livewire.summary.create');

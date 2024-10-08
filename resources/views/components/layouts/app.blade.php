@@ -11,18 +11,38 @@
     </script>
 </head>
 
-<body class="min-h-screen font-sans antialiased bg-black">
+<body class="font-sans antialiased bg-black">
     <x-toast />
     @if (session()->has('impersonate'))
         <livewire:admin.users.stop-impersonate />
     @endif
 
-    @if (!app()->environment('production'))
+    @if (app()->environment('production'))
         <x-devbar />
     @endif
 
+    <x-nav sticky class="lg:hidden bg-black">
+        <x-slot:brand>
+            <div class="p-2 ml-3 text-2xl font-black display-when-collapsed">
+                <div class="flex items-center justify-center text-center font-extralight">
+                    S
+                </div>
+            </div>
+        </x-slot:brand>
+        <x-slot:actions>
+            <label for="main-drawer" class="lg:hidden mr-3">
+                <x-icon name="o-bars-3" class="cursor-pointer" />
+            </label>
+        </x-slot:actions>
+    </x-nav>
+
     <x-main full-width>
-        <x-slot:sidebar drawer="main-drawer" collapsible class="bg-black">
+        <x-slot:sidebar
+            drawer="main-drawer"
+            collapsible                   {{-- Make it collapsible --}}
+            collapse-text="Esconder"       {{-- Custom collapsible text --}}
+            class="bg-black"           {{-- Any Tailwind class--}}
+        >
 
             <!-- Hidden when collapsed -->
             <div
@@ -89,12 +109,12 @@
         </x-slot:sidebar>
 
         <!-- The `$slot` goes here -->
-        <x-slot:content class="border bg-zinc-900 rounded-xl border-zinc-800">
+        <x-slot:content class="border bg-zinc-900 rounded-xl border-zinc-800 h-screen">
             {{ $slot }}
         </x-slot:content>
     </x-main>
     <livewire:auth.logout>
-        <livewire:auth.update>
+    <livewire:auth.update>
 </body>
 
 </html>
