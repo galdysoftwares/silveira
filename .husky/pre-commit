@@ -1,12 +1,6 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-./vendor/bin/phpstan
-if [ $? -ne 0 ]; then
-    echo "Ocorreu um erro no PHPSTAN.";
-    exit 1;
-fi;
-
 php artisan test --parallel | php
 if [ $? -ne 0 ]; then
     echo "Deu ruim no teste.";

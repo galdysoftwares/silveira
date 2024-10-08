@@ -5,3 +5,23 @@
 hr {
     @apply h-1 border-0 m-0 bg-gray-300; /* Adjust color as needed */
   }
+
+  h1 {
+    @apply !text-4xl font-bold leading-tight; /* Tamanho maior para h1 */
+}
+
+h2 {
+    @apply !text-3xl font-semibold leading-snug; /* Um pouco menor para h2 */
+}
+
+h3 {
+    @apply !text-2xl font-medium leading-snug; /* Ajustar h3 */
+}
+
+h4 {
+    @apply !text-xl font-medium leading-normal; /* Para h4 */
+}
+
+h5 {
+    @apply !text-lg font-normal leading-relaxed; /* Para h5 */
+}

@@ -1,5 +1,6 @@
 <?php declare(strict_types = 1);
 
+use App\Enums\Can;
 use App\Livewire\Products;
 use App\Models\{Customer, Product, User};
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -8,7 +9,7 @@ use Livewire\Livewire;
 use function Pest\Laravel\actingAs;
 
 it('should be able to access route products', function () {
-    $user = User::factory()->create()->withPermission();
+    $user = User::factory()->withPermission(Can::BE_AN_ADMIN)->create();
 
     actingAs($user)
         ->get(route('products'))
