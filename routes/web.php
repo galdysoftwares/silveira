@@ -25,7 +25,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     #region Summary
     Route::get('/', Dashboard::class)->name('dashboard');
     Route::get('/summaries/{summary}', Summary\Show::class)->name('summaries.show');
-    Route::get('/summaries', Summary\Show::class)->name('summaries.index');
+    Route::get('/summaries', Summary\Index::class)->name('summaries.index');
     #endregion
 
     #region Admin
