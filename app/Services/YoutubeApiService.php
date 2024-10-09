@@ -5,6 +5,8 @@ namespace App\Services;
 use GuzzleHttp\Client;
 use SimpleXMLElement;
 
+//usar api do youtube
+//criar interface com esse metodos
 class YoutubeApiService
 {
     public function __construct(private Client $client)
@@ -94,8 +96,6 @@ class YoutubeApiService
 
     public function getVideoCaptionsUrl(array $videoDetails): string
     {
-        dd($videoDetails);
-
         return $videoDetails['captions']['captionTracks'][0]['baseUrl'];
     }
 }
