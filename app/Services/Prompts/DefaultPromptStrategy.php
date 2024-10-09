@@ -6,7 +6,7 @@ class DefaultPromptStrategy implements PromptStrategyInterface
 {
     public function generatePrompt(array $captionsText): string
     {
-        $captionsText = implode(' ', $captionsText);
+        $captionsText = implode(' ', array_column($captionsText, 'text'));
 
         return "
             Você é um assistente especializado em criar resumos concisos, precisos e bem estruturados.
