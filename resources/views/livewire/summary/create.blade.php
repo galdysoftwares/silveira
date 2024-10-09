@@ -1,6 +1,6 @@
-<div x-data="{ isLoading: false }" class="flex flex-col items-center justify-center w-full h-full gap-4">
+<div class="flex flex-col items-center justify-center w-full h-full gap-4">
     <!-- Conteúdo principal -->
-    <div x-show="!isLoading" class="w-full">
+    <div wire:loading.remove class="w-full">
         <div class="py-8 text-center">
             <h1 class="text-4xl font-bold">
                 <span class="text-transparent bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 bg-clip-text">
@@ -12,8 +12,7 @@
         </div>
         <!-- Formulário -->
         <div class="w-full">
-            <x-form id="create-resume-form" class="flex flex-col w-full"
-                @submit.prevent="isLoading = true; $wire.generateResume()">
+            <x-form wire:submit='generateResume' id="create-resume-form" class="flex flex-col w-full">
                 <div class="w-full">
                     <x-input wire:model="url" placeholder="Cole a URL do vídeo aqui" />
                 </div>
