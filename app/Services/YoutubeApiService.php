@@ -94,6 +94,8 @@ class YoutubeApiService
 
     public function getVideoCaptionsUrl(array $videoDetails): string
     {
+        dd($videoDetails);
+
         return $videoDetails['captions']['captionTracks'][0]['baseUrl'];
     }
 }
