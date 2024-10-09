@@ -3,6 +3,7 @@
 declare(strict_types = 1);
 
 use App\Enums\Can;
+use App\Http\Controllers\Auth\{Github, Google};
 use App\Http\Controllers\Webhooks\HotmartWebhookController;
 use App\Livewire\Admin\Users\Index;
 use App\Livewire\Admin\Welcome;
@@ -18,6 +19,14 @@ Route::get('/email-validation', EmailValidation::class)->middleware('auth')->nam
 Route::get('/logout', fn () => auth()->logout())->name('auth.logout');
 Route::get('/password/recovery', Recovery::class)->name('password.recovery');
 Route::get('/password/reset', Reset::class)->name('password.reset');
+
+#regio third part auth
+Route::get('/github/login', Github\RedirectController::class)->name('github.login');
+Route::get('/github/callback', Github\CallbackController::class)->name('github.callback');
+
+Route::get('/google/login', Google\RedirectController::class)->name('google.login');
+Route::get('/google/callback', Google\CallbackController::class)->name('google.callback');
+
 #endregion
 
 #region Authenticated
