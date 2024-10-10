@@ -26,7 +26,6 @@ Route::get('/github/callback', Github\CallbackController::class)->name('github.c
 
 Route::get('/google/login', Google\RedirectController::class)->name('google.login');
 Route::get('/google/callback', Google\CallbackController::class)->name('google.callback');
-
 #endregion
 
 #region Authenticated
@@ -60,7 +59,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         #endregion
     });
     #endregion
-
 });
 #endregion
 
