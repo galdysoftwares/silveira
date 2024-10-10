@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Services\Prompts\DefaultPromptStrategy;
+use App\Services\Prompts\Summary\DescriptiveSummaryPrompt;
 use GuzzleHttp\Client;
 
 class SummaryService
@@ -14,8 +14,8 @@ class SummaryService
     ) {
         // Inicializa a fábrica do modelo e o cliente HTTP
         $client         = new Client();
-        $model          = LLMModelFactory::create('liquid');  // Pode mudar para 'gpt', etc.
-        $promptStrategy = new DefaultPromptStrategy();
+        $model          = LLMModelFactory::create('liquid'); // passar model no construtor
+        $promptStrategy = new DescriptiveSummaryPrompt(); // passar strategy no construtor
 
         // Injeta no serviço
         $this->llmService = new LLMService($client, $promptStrategy, $model);

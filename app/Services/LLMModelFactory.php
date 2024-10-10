@@ -9,6 +9,7 @@ class LLMModelFactory
         $models = [
             'liquid' => 'liquid/lfm-40b:free',
             'gpt'    => 'gpt-3.5-turbo',
+            'mytho'  => 'gryphe/mythomist-7b:free',
         ];
 
         return $models[$modelType] ?? $models['liquid'];
