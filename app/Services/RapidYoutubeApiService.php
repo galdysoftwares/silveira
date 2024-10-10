@@ -2,12 +2,11 @@
 
 namespace App\Services;
 
+use App\Interfaces\YoutubeApiInterface;
 use GuzzleHttp\Client;
 use SimpleXMLElement;
 
-//usar api do youtube
-//criar interface com esse metodos
-class YoutubeApiService
+class RapidYoutubeApiService implements YoutubeApiInterface
 {
     public function __construct(private Client $client)
     {
