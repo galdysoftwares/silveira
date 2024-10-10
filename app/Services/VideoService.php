@@ -5,7 +5,7 @@ namespace App\Services;
 class VideoService
 {
     public function __construct(
-        protected YoutubeApiService $youtubeApiService
+        protected RapidYoutubeApiService $youtubeApiService
     ) {
     }
 

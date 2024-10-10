@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Log;
 
 class OpenRouterApiService
 {
@@ -10,8 +11,7 @@ class OpenRouterApiService
     {
     }
 
-    // receber conteudo, prompt, max de tokens da resposta
-    public function generateSummaryFromCaptionsStreaming(array $captions) //: OpenRouterResponseDto
+    public function generateSummaryFromCaptionsStreaming(array $captions): array
     {
         $captionsText = implode(' ', array_column($captions, 'text'));
         $prompt       = [
@@ -61,14 +61,12 @@ class OpenRouterApiService
         $openRouterApiKey = env('OPEN_ROUTER_KEY');
 
         try {
-            // Cabeçalhos da requisição
             $headers = [
                 'Authorization' => "Bearer {$openRouterApiKey}",
                 'Content-Type'  => 'application/json',
             ];
 
-            // Fazer a requisição POST para a API do OpenRouter
-            $response = $this->client->post('https://openrouter.ai/api/v1/chat/completions', [
+            $response = $this->client->post(env('OPEN_ROUTER_URL'), [
                 'headers' => $headers,
                 'json'    => $body,
                 'stream'  => true,
@@ -97,8 +95,7 @@ class OpenRouterApiService
             }
 
         } catch (\Exception $e) {
-            // Em caso de erro, logar e retornar null TODO: usa o log do laravel
-            error_log("Erro ao gerar resumo: " . $e->getMessage());
+            Log::info("Erro ao gerar resumo: " . $e->getMessage());
 
             return null;
         }

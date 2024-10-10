@@ -17,9 +17,9 @@ export default {
         themes: [
             {
                 mytheme: {
-                    primary: "#2094f3",  /* Dark Blue */
-                    "primary-focus": "#1779d2",  /* Slightly Brighter Blue for Focus */
-                    "primary-content": "#ffffff",  /* White Text for Primary */
+                    primary: "#5a626a",  /* Dark Blue */
+                    "primary-focus": "#6c757d",  /* Slightly Brighter Blue for Focus */
+                    "primary-content": "#ccc",  /* White Text for Primary */
                     secondary: "#6c757d",  /* Light Gray */
                     "secondary-focus": "#5a626a",  /* Slightly Darker Gray for Focus */
                     "secondary-content": "#ffffff",  /* White Text for Secondary */
