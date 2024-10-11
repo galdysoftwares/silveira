@@ -74,7 +74,7 @@ class Create extends Component
         $this->redirectRoute('summaries.show', ['summary' => $summary]);
     }
 
-    #[Layout('app')]
+    #[Layout('components.layouts.app')]
     public function render(): View
     {
         return view('livewire.summary.create');
