@@ -11,6 +11,7 @@ use App\Livewire\Auth\Password\{Recovery, Reset};
 use App\Livewire\Auth\{EmailValidation, Login, Register};
 use App\Livewire\{Categories, Customers, Dashboard, Opportunities, Products, Summary, Webhooks};
 use Illuminate\Support\Facades\Route;
+use Laravel\Cashier\Http\Controllers\WebhookController;
 
 #region Loginflow
 Route::get('/login', Login::class)->name('login');
@@ -36,6 +37,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/summaries', Summary\Index::class)->name('summaries.index');
     #endregion
 
+    #region Stripe
+    Route::post('stripe/webhook', [WebhookController::class, 'handleWebhook']);
+    #endregion
+
     #region Admin
     Route::prefix('/admin')->middleware('can:' . Can::BE_AN_ADMIN->value)->group(function () {
         Route::get('/', Welcome::class)->name('admin.dashboard');
@@ -57,14 +62,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         #region Products
         Route::get('/products', Products\Index::class)->name('products');
         #endregion
+
+        #region Webhooks
+        Route::middleware('throttle')->prefix('webhooks')->group(function () {
+            Route::get('/', Webhooks\Index::class)->name('webhooks');
+            Route::post('hotmart', HotmartWebhookController::class)->name('webhooks.hotmart');
+        });
+        #endregion
     });
     #endregion
 });
 #endregion
-
-#region Webhooks
-Route::middleware('throttle')->prefix('webhooks')->group(function () {
-    Route::get('/', Webhooks\Index::class)->name('webhooks')->middleware(['auth', 'verified']);
-
-    Route::post('hotmart', HotmartWebhookController::class)->name('webhooks.hotmart');
-});

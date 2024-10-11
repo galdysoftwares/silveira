@@ -43,4 +43,10 @@ return [
         'redirect'      => env('GOOGLE_URL_REDIRECT'),
     ],
 
+    'stripe' => [
+        'model'  => App\Models\User::class, // Modelo que Cashier vai usar para o cliente
+        'key'    => env('STRIPE_KEY'),
+        'secret' => env('STRIPE_SECRET'),
+    ],
+
 ];
