@@ -9,7 +9,7 @@ use App\Livewire\Admin\Users\Index;
 use App\Livewire\Admin\Welcome;
 use App\Livewire\Auth\Password\{Recovery, Reset};
 use App\Livewire\Auth\{EmailValidation, Login, Register};
-use App\Livewire\{Categories, Customers, Dashboard, Opportunities, Products, Summary, Webhooks};
+use App\Livewire\{Categories, Customers, Dashboard, Opportunities, Products, Subscription, Summary, Webhooks};
 use Illuminate\Support\Facades\Route;
 use Laravel\Cashier\Http\Controllers\WebhookController;
 
@@ -37,8 +37,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/summaries', Summary\Index::class)->name('summaries.index');
     #endregion
 
-    #region Stripe
+    #region Stripe and Subscriptions
     Route::post('stripe/webhook', [WebhookController::class, 'handleWebhook']);
+    Route::get('subscriptions', Subscription\Index::class)->name('subscriptions.index');
     #endregion
 
     #region Admin
