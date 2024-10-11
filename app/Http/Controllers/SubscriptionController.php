@@ -14,11 +14,11 @@ class SubscriptionController extends Controller
 
     public function subscribe(Request $request)
     {
-        $user          = $request->user(); // Usuário autenticado
-        $plan          = $request->input('plan'); // ID do plano selecionado
-        $paymentMethod = $request->input('payment_method'); // ID do método de pagamento
+        // $user          = $request->user(); // Usuário autenticado
+        // $plan          = $request->input('plan'); // ID do plano selecionado
+        // $paymentMethod = $request->input('payment_method'); // ID do método de pagamento
 
-        $this->subscriptionService->createSubscription($user, $plan, $paymentMethod);
+        // $this->subscriptionService->createSubscription($user, $plan, $paymentMethod);
 
         return redirect()->route('subscription.success');
     }

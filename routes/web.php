@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 use App\Enums\Can;
 use App\Http\Controllers\Auth\{Github, Google};
+use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\Webhooks\HotmartWebhookController;
 use App\Livewire\Admin\Users\Index;
 use App\Livewire\Admin\Welcome;
@@ -40,6 +41,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     #region Stripe and Subscriptions
     Route::post('stripe/webhook', [WebhookController::class, 'handleWebhook']);
     Route::get('subscriptions', Subscription\Index::class)->name('subscriptions.index');
+    Route::get('subscribe', [SubscriptionController::class, 'subscribe'])->name('subscriptions.create');
     #endregion
 
     #region Admin
