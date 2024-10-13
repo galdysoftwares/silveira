@@ -35,7 +35,7 @@ class UsersSeeder extends Seeder
         User::query()->insert(
             array_map(
                 fn () => $this->defaultDefinition(),
-                range(1, 50)
+                range(1, 4)
             )
         );
     }
@@ -51,7 +51,7 @@ class UsersSeeder extends Seeder
                         'deleted_by' => $admin->id,
                     ]
                 ),
-                range(1, 50)
+                range(1, 2)
             )
         );
     }

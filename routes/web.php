@@ -4,13 +4,15 @@ declare(strict_types = 1);
 
 use App\Enums\Can;
 use App\Http\Controllers\Auth\{Github, Google};
+use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\Webhooks\HotmartWebhookController;
 use App\Livewire\Admin\Users\Index;
 use App\Livewire\Admin\Welcome;
 use App\Livewire\Auth\Password\{Recovery, Reset};
 use App\Livewire\Auth\{EmailValidation, Login, Register};
-use App\Livewire\{Categories, Customers, Dashboard, Opportunities, Products, Summary, Webhooks};
+use App\Livewire\{Categories, Customers, Dashboard, Opportunities, Products, Subscription, Summary, Webhooks};
 use Illuminate\Support\Facades\Route;
+use Laravel\Cashier\Http\Controllers\WebhookController;
 
 #region Loginflow
 Route::get('/login', Login::class)->name('login');
@@ -26,7 +28,6 @@ Route::get('/github/callback', Github\CallbackController::class)->name('github.c
 
 Route::get('/google/login', Google\RedirectController::class)->name('google.login');
 Route::get('/google/callback', Google\CallbackController::class)->name('google.callback');
-
 #endregion
 
 #region Authenticated
@@ -35,6 +36,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/', Dashboard::class)->name('dashboard');
     Route::get('/summaries/{summary}', Summary\Show::class)->name('summaries.show');
     Route::get('/summaries', Summary\Index::class)->name('summaries.index');
+    #endregion
+
+    #region Stripe and Subscriptions
+    Route::post('stripe/webhook', [WebhookController::class, 'handleWebhook']);
+    Route::get('subscriptions', Subscription\Index::class)->name('subscriptions.index');
+    Route::get('subscribe', [SubscriptionController::class, 'subscribe'])->name('subscriptions.create');
     #endregion
 
     #region Admin
@@ -58,15 +65,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         #region Products
         Route::get('/products', Products\Index::class)->name('products');
         #endregion
+
+        #region Webhooks
+        Route::middleware('throttle')->prefix('webhooks')->group(function () {
+            Route::get('/', Webhooks\Index::class)->name('webhooks');
+            Route::post('hotmart', HotmartWebhookController::class)->name('webhooks.hotmart');
+        });
+        #endregion
     });
     #endregion
-
 });
 #endregion
-
-#region Webhooks
-Route::middleware('throttle')->prefix('webhooks')->group(function () {
-    Route::get('/', Webhooks\Index::class)->name('webhooks')->middleware(['auth', 'verified']);
-
-    Route::post('hotmart', HotmartWebhookController::class)->name('webhooks.hotmart');
-});

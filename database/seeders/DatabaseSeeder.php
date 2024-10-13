@@ -16,13 +16,13 @@ class DatabaseSeeder extends Seeder
             UsersSeeder::class,
         ]);
 
-        $customers = Customer::factory(57)->create();
-        Opportunity::factory(27)->recycle($customers)->create();
-        $categories = Category::factory(7)->create();
-        Product::factory(127)->recycle($categories)->create();
+        $customers = Customer::factory(2)->create();
+        Opportunity::factory(5)->recycle($customers)->create();
+        $categories = Category::factory(2)->create();
+        Product::factory(5)->recycle($categories)->create();
 
-        $videos = Video::factory(35)->create();
-        Summary::factory(45)->recycle($videos)->create();
+        Video::factory()->create();
+        Summary::factory()->create();
 
     }
 }

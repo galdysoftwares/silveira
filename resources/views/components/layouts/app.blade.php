@@ -85,6 +85,8 @@
                         link="{{ route('dashboard') }}" route="dashboard" />
                     <x-menu-item title="{{ __('Meus Resumos') }}" icon="o-document-text"
                         link="{{ route('summaries.index') }}" route="summaries.index" />
+                    <x-menu-item title="{{ __('Minha Assinatura') }}" icon="o-currency-dollar"
+                        link="{{ route('subscriptions.index') }}" route="subscriptions.index" />
                 </div>
 
 
@@ -109,7 +111,7 @@
         </x-slot:sidebar>
 
         <!-- The `$slot` goes here -->
-        <x-slot:content class="border bg-zinc-900 rounded-xl border-zinc-800 h-screen">
+        <x-slot:content class="border bg-zinc-900 rounded-xl border-zinc-800">
             {{ $slot }}
         </x-slot:content>
     </x-main>
