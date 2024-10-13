@@ -4,7 +4,7 @@ namespace App\Livewire\Subscription;
 
 use App\Models\User;
 use Illuminate\Contracts\View\View;
-use Livewire\Attributes\On;
+use Livewire\Attributes\{On, Rule};
 use Livewire\Component;
 use Mary\Traits\Toast;
 
@@ -16,9 +16,16 @@ class PaymentMethod extends Component
 
     public User $user;
 
+    #[Rule(['required'])]
+    public $paymentMethod;
+
+    #[Rule(['required', 'string', 'min:3', 'max:255'])]
+    public string $name = '';
+
     public function mount()
     {
         $this->user = auth()->user();
+        $this->dispatch('load');
     }
 
     #[On('subscription::payment-method')]
@@ -27,9 +34,12 @@ class PaymentMethod extends Component
         $this->modal = true;
     }
 
-    public function addPaymentMethod(): void
+    #[On('subscription::card-verified')]
+    public function addPaymentMethod($paymentMethod): void
     {
+        $this->modal = false;
         $this->success(__('Metodo de pagamento registrado com sucesso'));
+        dd($this->paymentMethod, 'eita');
     }
 
     public function render(): View
