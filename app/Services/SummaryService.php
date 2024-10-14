@@ -14,7 +14,7 @@ class SummaryService
     ) {
         // Inicializa a fábrica do modelo e o cliente HTTP
         $client         = new Client();
-        $model          = LLMModelFactory::create('liquid'); // passar model no construtor
+        $model          = LLMModelFactory::create('llama'); // passar model no construtor
         $promptStrategy = new DescriptiveSummaryPrompt(); // passar strategy no construtor
 
         // Injeta no serviço

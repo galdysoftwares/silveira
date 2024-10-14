@@ -4,6 +4,7 @@ namespace App\Livewire\Summary;
 
 use App\Models\Summary;
 use Illuminate\View\View;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Parsedown;
 
@@ -20,6 +21,7 @@ class Show extends Component
         $this->content = $parsedown->text($this->summary->content);
     }
 
+    #[Layout('components.layouts.app')]
     public function render(): View
     {
         return view('livewire.summary.show');
